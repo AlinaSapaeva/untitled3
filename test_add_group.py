@@ -9,36 +9,62 @@ class test_add_group(unittest.TestCase):
         self.wb = WebDriver()
         self.wb.implicitly_wait(60)
 
+    def open_home_page(self, wb):
+        wb.get("http://localhost/addressbook/")
+
+    def logout(self, wb):
+        wb.find_element_by_link_text("Logout").click()
+
+    def return_to_groups_page(self, wb):
+        wb.find_element_by_link_text("group page").click()
+
+    def create_group(self, wb, name, header, footer):
+        # init group creations
+        wb.find_element_by_name("new").click()
+        # fill group form
+        wb.find_element_by_name("group_name").click()
+        wb.find_element_by_name("group_name").clear()
+        wb.find_element_by_name("group_name").send_keys(name)
+        wb.find_element_by_name("group_header").click()
+        wb.find_element_by_name("group_header").clear()
+        wb.find_element_by_name("group_header").send_keys(header)
+        wb.find_element_by_name("group_footer").click()
+        wb.find_element_by_name("group_footer").clear()
+        wb.find_element_by_name("group_footer").send_keys(footer)
+        #submit group creation
+        wb.find_element_by_name("submit").click()
+
+    def open_groups_page(self, wb):
+        wb.find_element_by_link_text("groups").click()
+
+    def login(self, wb, username, password):
+        wb.find_element_by_name("user").click()
+        wb.find_element_by_name("user").clear()
+        wb.find_element_by_name("user").send_keys(username)
+        wb.find_element_by_name("pass").click()
+        wb.find_element_by_name("pass").clear()
+        wb.find_element_by_name("pass").send_keys(password)
+        wb.find_element_by_xpath("//input[@value='Login']").click()
 
 
     def test_add_group(self):
         wb = self.wb
-        wb.get("http://localhost/addressbook/")
-        wb.find_element_by_name("user").click()
-        wb.find_element_by_name("user").clear()
-        wb.find_element_by_name("user").send_keys("admin")
-        wb.find_element_by_name("pass").click()
-        wb.find_element_by_name("pass").clear()
-        wb.find_element_by_name("pass").send_keys("secret")
-        wb.find_element_by_xpath("//input[@value='Login']").click()
-        wb.find_element_by_link_text("groups").click()
-        wb.find_element_by_name("new").click()
-        wb.find_element_by_name("group_name").click()
-        wb.find_element_by_name("group_name").clear()
-        wb.find_element_by_name("group_name").send_keys("test")
-        wb.find_element_by_name("group_header").click()
-        wb.find_element_by_name("group_header").clear()
-        wb.find_element_by_name("group_header").send_keys("test11")
-        wb.find_element_by_name("group_footer").click()
-        # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | name=group_footer | ]]
-        wb.find_element_by_name("group_footer").clear()
-        wb.find_element_by_name("group_footer").send_keys("test22")
-        wb.find_element_by_name("submit").click()
-        wb.find_element_by_link_text("group page").click()
-        wb.find_element_by_link_text("Logout").click()
-    
+        self.open_home_page(wb)
+        self.login(wb, username="admin", password="secret")
+        self.open_groups_page(wb)
+        self.create_group(wb, name="test", header="test11", footer="test22")
+        self.return_to_groups_page(wb)
+        self.logout(wb)
 
-    
+    def test_add_empty_group(self):
+        wb = self.wb
+        self.open_home_page(wb)
+        self.login(wb, username="admin", password="secret")
+        self.open_groups_page(wb)
+        self.create_group(wb, name="", header="", footer="")
+        self.return_to_groups_page(wb)
+        self.logout(wb)
+
     def tearDown(self):
         self.wb.quit()
 
