@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.common.action_chains import ActionChains
 
-class TestAddGroup(unittest.TestCase):
+import unittest, time
+
+class test_add_group(unittest.TestCase):
     def setUp(self):
-        self.wb = webdriver.Firefox()
-        self.wb.implicitly_wait(30)
+        self.wb = WebDriver()
+        self.wb.implicitly_wait(60)
 
 
-    
+
     def test_add_group(self):
         wb = self.wb
-        wb.get("http://localhost/addressbook/group.php")
+        wb.get("http://localhost/addressbook/")
         wb.find_element_by_name("user").click()
         wb.find_element_by_name("user").clear()
         wb.find_element_by_name("user").send_keys("admin")
@@ -39,16 +36,6 @@ class TestAddGroup(unittest.TestCase):
         wb.find_element_by_name("submit").click()
         wb.find_element_by_link_text("group page").click()
         wb.find_element_by_link_text("Logout").click()
-    
-    def is_element_present(self, how, what):
-        try: self.wb.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
-        return True
-    
-    def is_alert_present(self):
-        try: self.wb.switch_to_alert()
-        except NoAlertPresentException as e: return False
-        return True
     
 
     
