@@ -1,6 +1,6 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
-
+from fixtura.session import SessionHelper
 import os
 
 
@@ -8,14 +8,11 @@ class Application:
     def __init__(self):
         self.wb = WebDriver()
         self.wb.implicitly_wait(60)
+        self.session=SessionHelper(self)
 
     def open_home_page(self):
         wb = self.wb
         wb.get("http://localhost/addressbook/")
-
-    def logout(self):
-        wb = self.wb
-        wb.find_element_by_link_text("Logout").click()
 
     def return_home_page(self):
         wb = self.wb
@@ -49,16 +46,6 @@ class Application:
         wb = self.wb
         wb.find_element_by_link_text("groups").click()
 
-    def login(self, username, password):
-        wb = self.wb
-        self.open_home_page()
-        wb.find_element_by_name("user").click()
-        wb.find_element_by_name("user").clear()
-        wb.find_element_by_name("user").send_keys(username)
-        wb.find_element_by_name("pass").click()
-        wb.find_element_by_name("pass").clear()
-        wb.find_element_by_name("pass").send_keys(password)
-        wb.find_element_by_xpath("//input[@value='Login']").click()
 
 
     def add_new_contact(self, contact):
