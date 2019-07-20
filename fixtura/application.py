@@ -1,9 +1,7 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
 
-from group import Group
 import os
-from contact import Contact
 
 
 class Application:
