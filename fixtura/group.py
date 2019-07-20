@@ -1,4 +1,3 @@
-
 class GroupHelper:
     def __init__(self,app):
         self.app=app
@@ -7,7 +6,7 @@ class GroupHelper:
         wb = self.app.wb
         wb.find_element_by_link_text("group page").click()
 
-    def create_group(self, group):
+    def create(self, group):
         wb = self.app.wb
         self.open_groups_page()
         wb.find_element_by_link_text("groups").click()

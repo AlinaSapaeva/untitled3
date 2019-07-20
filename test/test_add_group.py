@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
 from fixtura.application import Application
-from fixtura.session import SessionHelper
+
 import pytest
 
 @pytest.fixture
