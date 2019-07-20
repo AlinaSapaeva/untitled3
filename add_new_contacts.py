@@ -113,7 +113,7 @@ class add_new_contacts(unittest.TestCase):
         wb.find_element_by_name("user").send_keys(username)
         wb.find_element_by_name("pass").click()
         wb.find_element_by_name("pass").clear()
-        wb.find_element_by_name("pass").send_keys(password  )
+        wb.find_element_by_name("pass").send_keys(password )
         wb.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self, wb):
