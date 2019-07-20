@@ -1,6 +1,7 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
 from fixtura.session import SessionHelper
+from fixtura.group import GroupHelper
 import os
 
 
@@ -9,6 +10,7 @@ class Application:
         self.wb = WebDriver()
         self.wb.implicitly_wait(60)
         self.session=SessionHelper(self)
+        self.group=GroupHelper(self)
 
     def open_home_page(self):
         wb = self.wb
