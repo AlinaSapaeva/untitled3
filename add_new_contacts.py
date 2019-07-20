@@ -132,6 +132,18 @@ phone2 ="fygfsdf",  notes="hgk")  )
         self.return_home_page(wb)
         self.logout(wb)
 
+    def test_add_empty_contact(self):
+        wb = self.wb
+        self.open_home_page(wb)
+        self.login(wb, username="admin", password="secret")
+        self.open_create_contacts_page(wb)
+        self.add_new_contact(wb,Contact(firstname="", middlename="",lastname="", nickname="",title="",
+company="", address="", home="", mobile="",  work="", fax="", email="",   email2="",
+email3="", homepage="",bday="-", bmonth="-", byear="-", aday="-", amonth="-", ayear="-", address2="",
+phone2 ="",  notes="")  )
+        self.return_home_page(wb)
+        self.logout(wb)
+
     def tearDown(self):
         self.wb.quit()
 
