@@ -16,10 +16,8 @@ class add_new_contacts(unittest.TestCase):
     def logout(self, wb):
         wb.find_element_by_link_text("Logout").click()
 
-    def return_home_page(self, wb):
-        wb.find_element_by_link_text("home").click()
-
     def add_new_contact(self, wb, contact):
+        wb.find_element_by_link_text("add new").click()
         wb.find_element_by_name("firstname").click()
         wb.find_element_by_name("firstname").clear()
         wb.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -103,11 +101,10 @@ class add_new_contacts(unittest.TestCase):
         wb.find_element_by_name("notes").clear()
         wb.find_element_by_name("notes").send_keys(contact.notes)
         wb.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-
-    def open_create_contacts_page(self, wb):
-        wb.find_element_by_link_text("add new").click()
+        wb.find_element_by_link_text("home").click()
 
     def login(self,  wb, username, password):
+        wb.get("http://localhost/addressbook/")
         wb.find_element_by_name("user").click()
         wb.find_element_by_name("user").clear()
         wb.find_element_by_name("user").send_keys(username)
@@ -116,32 +113,26 @@ class add_new_contacts(unittest.TestCase):
         wb.find_element_by_name("pass").send_keys(password )
         wb.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_home_page(self, wb):
-        wb.get("http://localhost/addressbook/")
+
+
 
     
     def test_add_new_contact(self):
         wb = self.wb
-        self.open_home_page(wb)
         self.login(wb, username="admin", password="secret")
-        self.open_create_contacts_page(wb)
         self.add_new_contact(wb,Contact(firstname="Alina", middlename="Maratovna",lastname="Sapaeva", nickname="hhh",title="gsdhfg",
 company="ggygg", address="gyfhg", home="frrg", mobile="9030620645",  work="gfgdghyfyu", fax="ggfgf", email="gyfgf",   email2="gdtr",
 email3="nbjhg", homepage="ggfdghb",bday="12", bmonth="March", byear="1994", aday="17", amonth="May", ayear="2000", address2="gffgjf",
 phone2 ="fygfsdf",  notes="hgk")  )
-        self.return_home_page(wb)
         self.logout(wb)
 
     def test_add_empty_contact(self):
         wb = self.wb
-        self.open_home_page(wb)
         self.login(wb, username="admin", password="secret")
-        self.open_create_contacts_page(wb)
         self.add_new_contact(wb,Contact(firstname="", middlename="",lastname="", nickname="",title="",
 company="", address="", home="", mobile="",  work="", fax="", email="",   email2="",
 email3="", homepage="",bday="-", bmonth="-", byear="-", aday="-", amonth="-", ayear="-", address2="",
 phone2 ="",  notes="")  )
-        self.return_home_page(wb)
         self.logout(wb)
 
     def tearDown(self):
