@@ -1,3 +1,5 @@
+import time
+
 
 class SessionHelper:
     def __init__(self,app):
@@ -17,4 +19,5 @@ class SessionHelper:
     def logout(self):
         wb = self.app.wb
         wb.find_element_by_link_text("Logout").click()
+        time.sleep(1)
 

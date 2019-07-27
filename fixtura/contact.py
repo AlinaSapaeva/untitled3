@@ -95,3 +95,11 @@ class ContactHelper:
     def open_create_contacts_page(self):
         wb = self.app.wb
         wb.find_element_by_link_text("add new").click()
+
+    def delete_first_contact(self):
+        wb = self.app.wb
+        # select first contact
+        wb.find_element_by_name("selected[]").click()
+        # submit deletion
+        wb.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wb.switch_to_alert().accept()
