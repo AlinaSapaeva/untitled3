@@ -8,6 +8,12 @@ class ContactHelper:
     def add_new(self, contact):
         wb = self.app.wb
         self.open_create_contacts_page()
+        self.fill_contact_form(contact)
+        wb.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.app.return_home_page()
+
+    def fill_contact_form(self, contact):
+        wb = self.app.wb
         wb.find_element_by_name("firstname").click()
         wb.find_element_by_name("firstname").clear()
         wb.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -21,11 +27,8 @@ class ContactHelper:
         wb.find_element_by_name("nickname").clear()
         wb.find_element_by_name("nickname").send_keys(contact.nickname)
         image = os.path.abspath('rr.jpg')
-
         wb.find_element_by_xpath("//input[@type='file']").clear()
-
         wb.find_element_by_xpath("//input[@type='file']").send_keys(image)
-
         wb.find_element_by_name("title").click()
         wb.find_element_by_name("title").clear()
         wb.find_element_by_name("title").send_keys(contact.title)
@@ -61,26 +64,21 @@ class ContactHelper:
         wb.find_element_by_name("homepage").send_keys(contact.homepage)
         wb.find_element_by_name("bday").click()
         Select(wb.find_element_by_name("bday")).select_by_visible_text(contact.bday)
-
         wb.find_element_by_name("bmonth").click()
         Select(wb.find_element_by_name("bmonth")).select_by_visible_text(contact.bmonth)
-
         wb.find_element_by_name("byear").click()
         wb.find_element_by_name("byear").clear()
         wb.find_element_by_name("byear").send_keys(contact.byear)
         wb.find_element_by_name("aday").click()
         Select(wb.find_element_by_name("aday")).select_by_visible_text(contact.aday)
-
         wb.find_element_by_name("amonth").click()
         Select(wb.find_element_by_name("amonth")).select_by_visible_text(contact.amonth)
-
         wb.find_element_by_name("ayear").click()
         wb.find_element_by_name("ayear").clear()
         wb.find_element_by_name("ayear").send_keys(contact.ayear)
         wb.find_element_by_name("address2").click()
         wb.find_element_by_name("address2").clear()
         wb.find_element_by_name("address2").send_keys(contact.address2)
-
         # wb.find_element_by_name("new_group").click()
         # wb.find_element_by_name("theform").click()
         wb.find_element_by_name("phone2").click()
@@ -89,8 +87,6 @@ class ContactHelper:
         wb.find_element_by_name("notes").click()
         wb.find_element_by_name("notes").clear()
         wb.find_element_by_name("notes").send_keys(contact.notes)
-        wb.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.app.return_home_page()
 
     def open_create_contacts_page(self):
         wb = self.app.wb
@@ -98,8 +94,21 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wb = self.app.wb
-        # select first contact
-        wb.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         # submit deletion
         wb.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wb.switch_to_alert().accept()
+
+    def select_first_contact(self):
+        wb = self.app.wb
+        wb.find_element_by_name("selected[]").click()
+
+    def modify_first_contact(self,new_data):
+        wb = self.app.wb
+        self.select_first_contact()
+        wb.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.fill_contact_form(new_data)
+        wb.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.app.return_home_page()
+
+
